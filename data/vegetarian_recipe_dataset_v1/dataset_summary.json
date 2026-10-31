@@ -1,0 +1,46 @@
+{
+  "version": "1.0-draft",
+  "created": "2026-10-30",
+  "label_status": "AI-authored; consistency-checked; independent human review pending",
+  "split_counts": {
+    "examples": 4,
+    "development": 13,
+    "test": 13,
+    "demo": 5
+  },
+  "allergen_vocabulary": [
+    "celery",
+    "cereals_containing_gluten",
+    "crustaceans",
+    "eggs",
+    "fish",
+    "lupin",
+    "milk",
+    "molluscs",
+    "mustard",
+    "nuts",
+    "peanuts",
+    "sesame",
+    "soya",
+    "sulphur_dioxide_and_sulphites"
+  ],
+  "benchmark_definite_allergen_recipe_counts": {
+    "celery": 2,
+    "cereals_containing_gluten": 4,
+    "eggs": 3,
+    "lupin": 2,
+    "milk": 8,
+    "mustard": 2,
+    "nuts": 3,
+    "peanuts": 2,
+    "sesame": 2,
+    "soya": 2
+  },
+  "validation": {
+    "unique_ids": true,
+    "unique_recipe_texts": true,
+    "distinct_recipe_family_keys": true,
+    "allowed_categories": true,
+    "targets_present_in_definite_labels": true
+  }
+}

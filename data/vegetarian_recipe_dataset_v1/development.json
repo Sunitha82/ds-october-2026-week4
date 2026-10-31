@@ -1,0 +1,540 @@
+[
+  {
+    "recipe_id": "DEVELOPMENT_01",
+    "split": "development",
+    "recipe_family": "cashew tomato gravy",
+    "input": {
+      "recipe_text": "Cashew tomato gravy\nIngredients: 40 g cashews; 200 g tomatoes; 100 ml water; 1 tsp vegetable oil; 1 tsp cumin; salt.\nPreparation time: 25 minutes.\nDifficulty: easy.\nMethod: Soak cashews for 20 minutes during preparation. Blend with tomatoes and water, then simmer with oil, cumin and salt.",
+      "target_allergen": "nuts"
+    },
+    "reference": {
+      "title": "Cashew tomato gravy",
+      "ingredients": [
+        "cashews",
+        "tomatoes",
+        "water",
+        "vegetable oil",
+        "cumin",
+        "salt"
+      ],
+      "allergens": [
+        "nuts"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 25,
+      "difficulty": "easy",
+      "main_allergen": "nuts",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "cashews",
+            "replacement": "hulled sunflower seeds",
+            "workability_reason": "Soak and blend thoroughly to thicken the gravy; texture may be less smooth."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_02",
+    "split": "development",
+    "recipe_family": "vegetable egg fried rice",
+    "input": {
+      "recipe_text": "Vegetable egg fried rice\nIngredients: 200 g cooked rice; 2 eggs; 60 g peas; 1 carrot; 1 tbsp sunflower oil; salt.\nPreparation time: 10 minutes.\nDifficulty: easy.\nMethod: Dice carrot. Heat oil, scramble eggs, add vegetables and rice, and fry until thoroughly hot.",
+      "target_allergen": "eggs"
+    },
+    "reference": {
+      "title": "Vegetable egg fried rice",
+      "ingredients": [
+        "cooked rice",
+        "eggs",
+        "peas",
+        "carrot",
+        "sunflower oil",
+        "salt"
+      ],
+      "allergens": [
+        "eggs"
+      ],
+      "possible_allergens": [],
+      "diet": "vegetarian",
+      "prep_time_minutes": 10,
+      "difficulty": "easy",
+      "main_allergen": "eggs",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "eggs",
+            "replacement": "crumbled firm tofu made from soya beans, water and calcium sulphate",
+            "workability_reason": "Fry the crumbles before adding rice; they provide pieces similar to scrambled egg."
+          }
+        ],
+        "introduced_allergens": [
+          "soya"
+        ],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_03",
+    "split": "development",
+    "recipe_family": "celery potato soup",
+    "input": {
+      "recipe_text": "Celery potato soup\nIngredients: 2 celery sticks; 200 g potato; 500 ml water; 1 tsp olive oil; salt.\nPreparation time: 10 minutes.\nDifficulty: easy.\nMethod: Chop vegetables, soften in oil, add water and simmer until potato is tender; blend.",
+      "target_allergen": "celery"
+    },
+    "reference": {
+      "title": "Celery potato soup",
+      "ingredients": [
+        "celery",
+        "potato",
+        "water",
+        "olive oil",
+        "salt"
+      ],
+      "allergens": [
+        "celery"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 10,
+      "difficulty": "easy",
+      "main_allergen": "celery",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "celery",
+            "replacement": "courgette",
+            "workability_reason": "Provides vegetable bulk and moisture, with a milder flavour."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_04",
+    "split": "development",
+    "recipe_family": "mustard cabbage stir-fry",
+    "input": {
+      "recipe_text": "Mustard cabbage stir-fry\nIngredients: 200 g cabbage; 1 tsp mustard seeds; 1 tbsp sunflower oil; 1 pinch turmeric; salt.\nPreparation time: 8 minutes.\nDifficulty: easy.\nMethod: Shred cabbage, heat oil and mustard seeds, then add cabbage, turmeric and salt and cook until tender.",
+      "target_allergen": "mustard"
+    },
+    "reference": {
+      "title": "Mustard cabbage stir-fry",
+      "ingredients": [
+        "cabbage",
+        "mustard seeds",
+        "sunflower oil",
+        "turmeric",
+        "salt"
+      ],
+      "allergens": [
+        "mustard"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 8,
+      "difficulty": "easy",
+      "main_allergen": "mustard",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "mustard seeds",
+            "replacement": "cumin seeds",
+            "workability_reason": "Provides a different aromatic tempering while retaining the stir-fry method."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_05",
+    "split": "development",
+    "recipe_family": "tofu broccoli skewers",
+    "input": {
+      "recipe_text": "Tofu broccoli skewers\nIngredients: 200 g firm tofu (soya beans, water, calcium sulphate); 150 g broccoli; 1 tbsp lemon juice; 1 tbsp olive oil; salt.\nPreparation time: 15 minutes.\nDifficulty: medium.\nMethod: Cut tofu and broccoli, coat in lemon, oil and salt, thread onto skewers and grill until hot and lightly browned.",
+      "target_allergen": "soya"
+    },
+    "reference": {
+      "title": "Tofu broccoli skewers",
+      "ingredients": [
+        "firm tofu",
+        "broccoli",
+        "lemon juice",
+        "olive oil",
+        "salt"
+      ],
+      "allergens": [
+        "soya"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 15,
+      "difficulty": "medium",
+      "main_allergen": "soya",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "firm tofu",
+            "replacement": "cooked chickpeas served with grilled broccoli rather than threaded onto skewers",
+            "workability_reason": "Chickpeas provide substance; change the serving method because they do not thread well."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": "A workable suggestion must acknowledge any necessary method change."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_06",
+    "split": "development",
+    "recipe_family": "yoghurt cucumber dip",
+    "input": {
+      "recipe_text": "Yoghurt cucumber dip\nIngredients: 150 g plain yoghurt (milk, cultures); 1 cucumber; 1 pinch ground cumin; salt.\nPreparation time: 10 minutes.\nDifficulty: easy.\nMethod: Grate and squeeze cucumber, then stir into yoghurt with cumin and salt.",
+      "target_allergen": "milk"
+    },
+    "reference": {
+      "title": "Yoghurt cucumber dip",
+      "ingredients": [
+        "plain yoghurt",
+        "cucumber",
+        "ground cumin",
+        "salt"
+      ],
+      "allergens": [
+        "milk"
+      ],
+      "possible_allergens": [],
+      "diet": "vegetarian",
+      "prep_time_minutes": 10,
+      "difficulty": "easy",
+      "main_allergen": "milk",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "plain yoghurt",
+            "replacement": "unsweetened coconut yoghurt with a milk-free ingredient label",
+            "workability_reason": "Retains a thick, cultured dip; flavour differs."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_07",
+    "split": "development",
+    "recipe_family": "peanut lime slaw",
+    "input": {
+      "recipe_text": "Peanut lime slaw\nIngredients: 150 g cabbage; 30 g roasted peanuts; 1 carrot; 1 tbsp lime juice; 1 tsp olive oil; salt.\nPreparation time: 12 minutes.\nDifficulty: easy.\nMethod: Shred cabbage and carrot and toss with lime, oil, salt and crushed peanuts.",
+      "target_allergen": "peanuts"
+    },
+    "reference": {
+      "title": "Peanut lime slaw",
+      "ingredients": [
+        "cabbage",
+        "roasted peanuts",
+        "carrot",
+        "lime juice",
+        "olive oil",
+        "salt"
+      ],
+      "allergens": [
+        "peanuts"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 12,
+      "difficulty": "easy",
+      "main_allergen": "peanuts",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "roasted peanuts",
+            "replacement": "roasted pumpkin seeds",
+            "workability_reason": "Maintains a crunchy topping."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_08",
+    "split": "development",
+    "recipe_family": "lupin savoury pancakes",
+    "input": {
+      "recipe_text": "Lupin savoury pancakes\nIngredients: 80 g lupin flour; 120 ml water; 1 tsp olive oil; 1 pinch ground cumin; salt.\nPreparation time: 10 minutes.\nDifficulty: medium.\nMethod: Whisk flour, water, cumin and salt. Rest for 5 minutes, then cook small pancakes in an oiled pan.",
+      "target_allergen": "lupin"
+    },
+    "reference": {
+      "title": "Lupin savoury pancakes",
+      "ingredients": [
+        "lupin flour",
+        "water",
+        "olive oil",
+        "ground cumin",
+        "salt"
+      ],
+      "allergens": [
+        "lupin"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 10,
+      "difficulty": "medium",
+      "main_allergen": "lupin",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "lupin flour",
+            "replacement": "chickpea flour",
+            "workability_reason": "Forms savoury pancakes; adjust water gradually to a pourable batter."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_09",
+    "split": "development",
+    "recipe_family": "butter cream mashed potato",
+    "input": {
+      "recipe_text": "Butter cream mashed potato\nIngredients: 300 g potato; 15 g butter; 30 ml dairy cream; water for boiling; salt.\nPreparation time: 10 minutes.\nDifficulty: easy.\nMethod: Peel and chop potatoes, boil until tender, drain, then mash with butter, cream and salt.",
+      "target_allergen": "milk"
+    },
+    "reference": {
+      "title": "Butter cream mashed potato",
+      "ingredients": [
+        "potato",
+        "butter",
+        "dairy cream",
+        "water",
+        "salt"
+      ],
+      "allergens": [
+        "milk"
+      ],
+      "possible_allergens": [],
+      "diet": "vegetarian",
+      "prep_time_minutes": 10,
+      "difficulty": "easy",
+      "main_allergen": "milk",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "butter",
+            "replacement": "olive oil",
+            "workability_reason": "Provides fat for a soft mash."
+          },
+          {
+            "ingredient": "dairy cream",
+            "replacement": "reserved potato cooking water",
+            "workability_reason": "Loosens the mash; add gradually to avoid a watery result."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": "Replacing butter alone does not remove milk: dairy cream must also be replaced."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_10",
+    "split": "development",
+    "recipe_family": "almond wheat cookies",
+    "input": {
+      "recipe_text": "Almond wheat cookies\nIngredients: 100 g plain wheat flour; 30 g ground almonds; 30 g sugar; 30 ml sunflower oil; 30 ml water.\nPreparation time: 12 minutes.\nDifficulty: medium.\nMethod: Mix into a soft dough, shape small cookies and bake at 180 C for 15 minutes.",
+      "target_allergen": "nuts"
+    },
+    "reference": {
+      "title": "Almond wheat cookies",
+      "ingredients": [
+        "wheat flour",
+        "ground almonds",
+        "sugar",
+        "sunflower oil",
+        "water"
+      ],
+      "allergens": [
+        "cereals_containing_gluten",
+        "nuts"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 12,
+      "difficulty": "medium",
+      "main_allergen": "nuts",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "ground almonds",
+            "replacement": "ground sunflower seeds",
+            "workability_reason": "Replaces the ground seed-like component; adjust water if the dough is dry."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [
+          "cereals_containing_gluten"
+        ],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": "Wheat remains after removing almonds; do not call the adapted recipe allergen-free."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_11",
+    "split": "development",
+    "recipe_family": "roasted aubergine dip",
+    "input": {
+      "recipe_text": "Roasted aubergine dip\nIngredients: 1 aubergine; 1 tbsp lemon juice; 1 tbsp olive oil; salt.\nMethod: Roast aubergine until soft, scoop out flesh and mash with lemon, oil and salt.",
+      "target_allergen": null
+    },
+    "reference": {
+      "title": "Roasted aubergine dip",
+      "ingredients": [
+        "aubergine",
+        "lemon juice",
+        "olive oil",
+        "salt"
+      ],
+      "allergens": [],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": null,
+      "difficulty": null,
+      "main_allergen": null,
+      "substitution_required": false,
+      "substitution_reference": null,
+      "annotation_notes": "Do not infer preparation time or difficulty from cooking instructions."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_12",
+    "split": "development",
+    "recipe_family": "vegetarian stock risotto",
+    "input": {
+      "recipe_text": "Vegetarian stock risotto\nIngredients: 100 g arborio rice; 500 ml vegetarian stock, full ingredients unavailable; 1 onion; 1 tbsp olive oil.\nPreparation time: 10 minutes.\nDifficulty: medium.\nMethod: Chop onion, soften in oil, add rice, then add hot stock gradually while stirring until tender.",
+      "target_allergen": null
+    },
+    "reference": {
+      "title": "Vegetarian stock risotto",
+      "ingredients": [
+        "arborio rice",
+        "vegetarian stock",
+        "onion",
+        "olive oil"
+      ],
+      "allergens": [],
+      "possible_allergens": [
+        "celery",
+        "cereals_containing_gluten",
+        "milk"
+      ],
+      "diet": "vegetarian",
+      "prep_time_minutes": 10,
+      "difficulty": "medium",
+      "main_allergen": null,
+      "substitution_required": false,
+      "substitution_reference": null,
+      "annotation_notes": "Stock is explicitly vegetarian; vegan status is unknown. Possible allergens are conservative label-check examples, not confirmed contents or an exhaustive list. No definite allergen exists to target."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEVELOPMENT_13",
+    "split": "development",
+    "recipe_family": "egg milk french toast",
+    "input": {
+      "recipe_text": "Egg milk French toast\nIngredients: 2 slices bread (wheat flour, water, yeast, salt); 1 egg; 60 ml whole milk; 1 tsp sunflower oil.\nPreparation time: 5 minutes.\nDifficulty: easy.\nMethod: Whisk egg with milk, dip bread and pan-fry in oil until the coating is fully cooked.",
+      "target_allergen": "eggs"
+    },
+    "reference": {
+      "title": "Egg milk French toast",
+      "ingredients": [
+        "wheat bread",
+        "egg",
+        "whole milk",
+        "sunflower oil"
+      ],
+      "allergens": [
+        "cereals_containing_gluten",
+        "eggs",
+        "milk"
+      ],
+      "possible_allergens": [],
+      "diet": "vegetarian",
+      "prep_time_minutes": 5,
+      "difficulty": "easy",
+      "main_allergen": "eggs",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "egg",
+            "replacement": "1 tbsp chickpea flour whisked into the milk",
+            "workability_reason": "Makes a batter coating; cook it through on each side."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [
+          "cereals_containing_gluten",
+          "milk"
+        ],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": "Milk and wheat remain. Removing egg does not make the recipe vegan."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  }
+]

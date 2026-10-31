@@ -1,0 +1,157 @@
+[
+  {
+    "recipe_id": "EXAMPLES_01",
+    "split": "examples",
+    "recipe_family": "creamy sweetcorn soup",
+    "input": {
+      "recipe_text": "Creamy sweetcorn soup\nIngredients: 200 g sweetcorn; 200 ml whole milk; 300 ml water; 1 tsp olive oil; salt.\nPreparation time: 5 minutes.\nDifficulty: easy.\nMethod: Warm the oil, add sweetcorn and water, simmer for 10 minutes, blend, then add milk and warm gently.",
+      "target_allergen": "milk"
+    },
+    "reference": {
+      "title": "Creamy sweetcorn soup",
+      "ingredients": [
+        "sweetcorn",
+        "whole milk",
+        "water",
+        "olive oil",
+        "salt"
+      ],
+      "allergens": [
+        "milk"
+      ],
+      "possible_allergens": [],
+      "diet": "vegetarian",
+      "prep_time_minutes": 5,
+      "difficulty": "easy",
+      "main_allergen": "milk",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "whole milk",
+            "replacement": "unsweetened coconut milk",
+            "workability_reason": "Adds liquid and creaminess; coconut flavour will be more noticeable."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "EXAMPLES_02",
+    "split": "examples",
+    "recipe_family": "tahini lemon dressing",
+    "input": {
+      "recipe_text": "Tahini lemon dressing\nIngredients: 2 tbsp tahini (100% sesame); 1 tbsp lemon juice; 2 tbsp water; salt.\nPreparation time: 3 minutes.\nDifficulty: easy.\nMethod: Whisk everything until smooth, adding water gradually.",
+      "target_allergen": "sesame"
+    },
+    "reference": {
+      "title": "Tahini lemon dressing",
+      "ingredients": [
+        "tahini",
+        "lemon juice",
+        "water",
+        "salt"
+      ],
+      "allergens": [
+        "sesame"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 3,
+      "difficulty": "easy",
+      "main_allergen": "sesame",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "tahini",
+            "replacement": "sunflower seed butter made only from sunflower seeds",
+            "workability_reason": "Provides a thick seed paste; adjust water to the desired consistency."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "EXAMPLES_03",
+    "split": "examples",
+    "recipe_family": "cucumber mint salad",
+    "input": {
+      "recipe_text": "Cucumber mint salad\nIngredients: 1 cucumber; 6 mint leaves; 1 tbsp lemon juice; 1 tsp olive oil; salt.\nPreparation time: 8 minutes.\nDifficulty: easy.\nMethod: Slice cucumber, chop mint and toss with the dressing.",
+      "target_allergen": null
+    },
+    "reference": {
+      "title": "Cucumber mint salad",
+      "ingredients": [
+        "cucumber",
+        "mint",
+        "lemon juice",
+        "olive oil",
+        "salt"
+      ],
+      "allergens": [],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 8,
+      "difficulty": "easy",
+      "main_allergen": null,
+      "substitution_required": false,
+      "substitution_reference": null,
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "EXAMPLES_04",
+    "split": "examples",
+    "recipe_family": "quick pesto pasta",
+    "input": {
+      "recipe_text": "Quick pesto pasta\nIngredients: 100 g dry wheat pasta (wheat and water); 2 tbsp shop-bought pesto, ingredients not provided; water for boiling.\nMethod: Cook pasta in water, drain and stir in pesto.",
+      "target_allergen": "cereals_containing_gluten"
+    },
+    "reference": {
+      "title": "Quick pesto pasta",
+      "ingredients": [
+        "wheat pasta",
+        "pesto",
+        "water"
+      ],
+      "allergens": [
+        "cereals_containing_gluten"
+      ],
+      "possible_allergens": [
+        "milk",
+        "nuts"
+      ],
+      "diet": "uncertain",
+      "prep_time_minutes": null,
+      "difficulty": null,
+      "main_allergen": "cereals_containing_gluten",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "wheat pasta",
+            "replacement": "rice pasta made only from rice and water",
+            "workability_reason": "Provides pasta shapes; follow its own cooking instructions."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": "Unspecified pesto may contain milk or tree nuts and may use animal rennet. Do not assert these as definite allergens or assume vegetarian suitability. Preparation time and difficulty are unstated."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  }
+]

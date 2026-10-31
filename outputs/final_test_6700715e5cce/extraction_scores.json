@@ -1,0 +1,26 @@
+[
+  {
+    "recipe_id":"TEST_08",
+    "schema_valid":true,
+    "allergens_correct":true,
+    "diet_correct":true,
+    "prep_time_correct":true,
+    "difficulty_correct":true
+  },
+  {
+    "recipe_id":"TEST_10",
+    "schema_valid":true,
+    "allergens_correct":true,
+    "diet_correct":true,
+    "prep_time_correct":true,
+    "difficulty_correct":true
+  },
+  {
+    "recipe_id":"TEST_11",
+    "schema_valid":true,
+    "allergens_correct":true,
+    "diet_correct":true,
+    "prep_time_correct":true,
+    "difficulty_correct":true
+  }
+]

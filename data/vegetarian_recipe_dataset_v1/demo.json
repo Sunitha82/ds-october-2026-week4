@@ -1,0 +1,206 @@
+[
+  {
+    "recipe_id": "DEMO_01",
+    "split": "demo",
+    "recipe_family": "paneer pepper curry",
+    "input": {
+      "recipe_text": "Paneer pepper curry\nIngredients: 200 g paneer; 1 red pepper; 200 g chopped tomatoes; 1 tbsp olive oil; 1 tsp cumin; salt.\nPreparation time: 10 minutes.\nDifficulty: easy.\nMethod: Chop pepper and paneer. Heat oil and cumin, add pepper and tomatoes and simmer. Add paneer and heat through.",
+      "target_allergen": "milk"
+    },
+    "reference": {
+      "title": "Paneer pepper curry",
+      "ingredients": [
+        "paneer",
+        "red pepper",
+        "chopped tomatoes",
+        "olive oil",
+        "cumin",
+        "salt"
+      ],
+      "allergens": [
+        "milk"
+      ],
+      "possible_allergens": [],
+      "diet": "vegetarian",
+      "prep_time_minutes": 10,
+      "difficulty": "easy",
+      "main_allergen": "milk",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "paneer",
+            "replacement": "firm tofu made from soya beans, water and calcium sulphate",
+            "workability_reason": "Cubed tofu retains pieces in the curry; add gently near the end."
+          }
+        ],
+        "introduced_allergens": [
+          "soya"
+        ],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEMO_02",
+    "split": "demo",
+    "recipe_family": "peanut coconut chutney",
+    "input": {
+      "recipe_text": "Peanut coconut chutney\nIngredients: 40 g roasted peanuts; 20 g fresh coconut; 1 green chilli; 50 ml water; salt.\nPreparation time: 5 minutes.\nDifficulty: easy.\nMethod: Blend all ingredients to a thick chutney, adding water gradually.",
+      "target_allergen": "peanuts"
+    },
+    "reference": {
+      "title": "Peanut coconut chutney",
+      "ingredients": [
+        "roasted peanuts",
+        "fresh coconut",
+        "green chilli",
+        "water",
+        "salt"
+      ],
+      "allergens": [
+        "peanuts"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 5,
+      "difficulty": "easy",
+      "main_allergen": "peanuts",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "roasted peanuts",
+            "replacement": "roasted sunflower seeds",
+            "workability_reason": "Forms a blended seed paste with a different flavour."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEMO_03",
+    "split": "demo",
+    "recipe_family": "vegetable soy sauce noodles",
+    "input": {
+      "recipe_text": "Vegetable soy sauce noodles\nIngredients: 100 g noodles (wheat flour and water); 1 carrot; 1 pepper; 1 tbsp soy sauce (soya beans, wheat, water, salt); 1 tbsp sunflower oil; water for boiling.\nPreparation time: 10 minutes.\nDifficulty: easy.\nMethod: Boil noodles and drain. Slice vegetables, stir-fry in oil, add noodles and soy sauce and toss.",
+      "target_allergen": "soya"
+    },
+    "reference": {
+      "title": "Vegetable soy sauce noodles",
+      "ingredients": [
+        "wheat noodles",
+        "carrot",
+        "pepper",
+        "soy sauce",
+        "sunflower oil",
+        "water"
+      ],
+      "allergens": [
+        "cereals_containing_gluten",
+        "soya"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 10,
+      "difficulty": "easy",
+      "main_allergen": "soya",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "soy sauce",
+            "replacement": "salt dissolved in a small amount of water",
+            "workability_reason": "Provides seasoning and moisture, with less umami than soy sauce."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [
+          "cereals_containing_gluten"
+        ],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": "Wheat remains in both noodles and the original soy sauce; replacing soy sauce for soya does not remove wheat noodles."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEMO_04",
+    "split": "demo",
+    "recipe_family": "sesame lemon rice",
+    "input": {
+      "recipe_text": "Sesame lemon rice\nIngredients: 200 g cooked rice; 1 tbsp sesame seeds; 1 tbsp lemon juice; 1 tsp sunflower oil; salt.\nPreparation time: 5 minutes.\nDifficulty: easy.\nMethod: Toast sesame in oil, add cooked rice and heat thoroughly, then stir in lemon and salt.",
+      "target_allergen": "sesame"
+    },
+    "reference": {
+      "title": "Sesame lemon rice",
+      "ingredients": [
+        "cooked rice",
+        "sesame seeds",
+        "lemon juice",
+        "sunflower oil",
+        "salt"
+      ],
+      "allergens": [
+        "sesame"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 5,
+      "difficulty": "easy",
+      "main_allergen": "sesame",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "sesame seeds",
+            "replacement": "pumpkin seeds",
+            "workability_reason": "Provides a toasted crunchy component."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "DEMO_05",
+    "split": "demo",
+    "recipe_family": "simple vegetable rice",
+    "input": {
+      "recipe_text": "Simple vegetable rice\nIngredients: 200 g cooked rice; 60 g peas; 1 carrot; 1 tsp olive oil; salt.\nPreparation time: 8 minutes.\nDifficulty: easy.\nMethod: Dice carrot, cook with peas in oil until tender, add rice and salt and heat thoroughly.",
+      "target_allergen": null
+    },
+    "reference": {
+      "title": "Simple vegetable rice",
+      "ingredients": [
+        "cooked rice",
+        "peas",
+        "carrot",
+        "olive oil",
+        "salt"
+      ],
+      "allergens": [],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 8,
+      "difficulty": "easy",
+      "main_allergen": null,
+      "substitution_required": false,
+      "substitution_reference": null,
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  }
+]

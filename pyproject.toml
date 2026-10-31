@@ -1,0 +1,29 @@
+[project]
+name = "ds-october-2026-week4"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Saraswathi Lakshman", email = "Saraswathi.lakshman@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.162.0",
+    "httpx>=0.28.1",
+    "jupyter>=1.1.1",
+    "numpy>=2.5.4",
+    "openai>=3.40.0",
+    "pandas>=3.1.0",
+    "pydantic>=2.14.1",
+    "python-dotenv>=1.2.4",
+    "sentence-transformers>=6.2.0",
+    "streamlit>=1.66.1",
+    "uvicorn>=0.54.0",
+]
+
+[project.scripts]
+ds-october-2026-week4 = "ds_october_2026_week4:main"
+
+[build-system]
+requires = ["uv_build>=0.12.21,<0.13.0"]
+build-backend = "uv_build"

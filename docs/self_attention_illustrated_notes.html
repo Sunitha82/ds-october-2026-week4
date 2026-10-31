@@ -1,0 +1,513 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Self-Attention — Illustrated Study Notes</title><style>:root{--ink:#17324d;--muted:#52657a;--teal:#087f8c}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f3f6fa;color:var(--ink);font:17px/1.75 system-ui,-apple-system,Segoe UI,sans-serif}header{background:#102f49;color:#fff;padding:48px max(30px,calc((100vw - 1100px)/2));}header .eyebrow{font-size:13px;letter-spacing:2px;color:#98ded8;font-weight:700}header h1{font-size:40px;line-height:1.15;margin:12px 0 16px}header p{max-width:760px;color:#dce8f3;margin:0}main{max-width:1100px;padding:40px 48px 70px;margin:32px auto;background:white;border-radius:18px;box-shadow:0 12px 48px #1230480b}h1{font-size:31px}h2{margin:55px 0 20px;font-size:26px;line-height:1.35;border-top:1px solid #dfe7ee;padding-top:28px;scroll-margin-top:20px}h3{font-size:21px;margin-top:28px}p{margin:17px 0}strong{font-weight:700}table{border-collapse:collapse;width:100%;font-size:15px;margin:24px 0;display:table}th{text-align:left;background:#eaf5f5;color:#14646c}td,th{border:1px solid #dce5ec;padding:12px 14px;vertical-align:top}tr:nth-child(even) td{background:#f8fafc}li{margin:7px 0}a{color:#08717e}figure{margin:32px 0;padding:24px;border:1px solid #cfdfe9;border-radius:16px;background:#fbfdff;break-inside:avoid}figure h4{font-size:19px;line-height:1.4;margin:0 0 20px;color:var(--teal)}figure svg{display:block;width:100%;height:auto}figcaption{font-size:14px;color:var(--muted);line-height:1.6;margin-top:15px;border-top:1px solid #e0e9ef;padding-top:14px}.toc{padding:22px 26px;background:#f2f7fa;border-radius:14px;margin:0 0 35px}.toc summary{font-weight:700;cursor:pointer}.toc div{columns:2;column-gap:35px;padding-top:15px}.toc a{display:block;font-size:14px;margin:5px 0;break-inside:avoid;text-decoration:none}footer{text-align:center;font-size:14px;color:var(--muted);padding:0 25px 35px}@media(max-width:700px){body{font-size:16px}header{padding:32px 22px}header h1{font-size:30px}main{padding:22px 18px;margin:16px 10px}figure{padding:12px;margin-left:-5px;margin-right:-5px}h2{font-size:23px}.toc div{columns:1}table{display:block;overflow:auto}td,th{padding:9px} }@media print{body{background:#fff;font-size:11pt}header{padding:22px;background:#fff;color:var(--ink);border-bottom:2px solid var(--teal)}header p{color:var(--muted)}header h1{font-size:25pt}main{box-shadow:none;margin:0;max-width:none;padding:12px 0}.toc{display:none}h2{break-after:avoid;font-size:18pt}figure{margin:18px 0}table{font-size:10pt}footer{display:none}}</style></head><body><header><div class="eyebrow">TRANSFORMERS · STUDY & REVISION</div><h1>Self-attention, pictured step by step</h1><p>The complete transcript notes, with nine diagrams, worked examples and clearly marked technical corrections.</p></header><main><details class="toc"><summary>Jump to a topic</summary><div><a href="#section-0">1. Why self-attention matters</a><a href="#section-1">2. The problem: the same word can have different meanings</a><a href="#section-2">3. Static word embeddings and their limitation</a><a href="#section-3">4. What self-attention produces</a><a href="#section-4">5. First construction: make a weighted mixture</a><a href="#section-5">6. What the mixture weights mean</a><a href="#section-6">7. Dot product: calculate one score from two vectors</a><a href="#section-7">8. Softmax: convert raw scores into attention weights</a><a href="#section-8">9. Use the weights to create the new vector</a><a href="#section-9">10. The gravity analogy</a><a href="#section-10">11. Problems with the first construction</a><a href="#section-11">12. Query, Key and Value</a><a href="#section-12">13. Complete per-word operation</a><a href="#section-13">14. Benefits and their limits</a><a href="#section-14">15. Recap of the construction</a><a href="#section-15">16. Matrix multiplication for the whole sentence</a><a href="#section-16">17. The final equation</a><a href="#section-17">18. Assessment answers to remember</a><a href="#section-18">19. Transcript coverage checklist</a><a href="#section-19">Source used to check technical corrections</a></div></details><h1>Self-Attention — Complete Study Notes</h1>
+<p><strong>Source:</strong> The supplied Jay Patel transcript, from the introduction to the unfinished sentence at approximately 42:15.</p>
+<p><strong>Scope:</strong> All teaching points, examples, calculations, analogies, benefits and recap material in the supplied text are covered below. Repeated explanations are consolidated. The speaker&#39;s opening comments about filming and restructuring the lesson are presentation background; his teaching approach is to build self-attention from the problem to the equation. The supplied text ends before he explains division by √dₖ. That explanation below is labelled as an addition.</p>
+<p><strong>Main idea:</strong> Self-attention creates a representation of each token by combining information from relevant tokens in the same sequence.</p>
+<p>The transcript says “words”; real transformer inputs are usually <strong>tokens</strong>, which can be whole words, parts of words or punctuation. We keep the transcript&#39;s word-level examples to make the calculations easy.</p>
+<h2 id="section-0">1. Why self-attention matters — 0:00–1:14</h2>
+<p>Self-attention is a central component of transformers, including models such as BERT and GPT. It helps a model interpret an item using the context around it. It is a component of a neural network, rather than an entire model by itself.</p>
+<p>The lesson builds the mechanism in this order: identify the context problem; combine word vectors; calculate relationship scores; normalize them with softmax; introduce learnable projections; express the complete operation as matrix multiplication.</p>
+<h2 id="section-1">2. The problem: the same word can have different meanings — 1:15–4:04</h2>
+<p>The problem is <strong>contextual word representation</strong>: the numerical representation should reflect how the word is being used in this particular sentence.</p>
+<table>
+<thead>
+<tr>
+<th>Example from the transcript</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Light, associated with photons, brightness and waves</td>
+<td>Visible electromagnetic radiation</td>
+</tr>
+<tr>
+<td>Light weight / lightweight</td>
+<td>Low weight; associations such as feathery, delicate and airy</td>
+</tr>
+<tr>
+<td>Light blue</td>
+<td>A pale shade of blue</td>
+</tr>
+<tr>
+<td>Light a candle</td>
+<td>“Light” is a verb meaning ignite</td>
+</tr>
+<tr>
+<td>Light-headed</td>
+<td>Feeling faint or dizzy</td>
+</tr>
+<tr>
+<td>Apple phones</td>
+<td>Apple the technology company</td>
+</tr>
+<tr>
+<td>Apple juice</td>
+<td>Apple the fruit</td>
+</tr>
+</tbody></table>
+<p>The transcript appears to transcribe “light a candle” as “lighter candle” and “verb” as “word”. The table gives the intended example.</p>
+<p><strong>Memory aid:</strong> The surrounding words provide clues about the intended meaning.</p>
+<h2 id="section-2">3. Static word embeddings and their limitation</h2>
+<p>A <strong>vector</strong> is an ordered list of numbers. An <strong>embedding</strong> is a vector used to represent an item such as a word.</p>
+<p>With a traditional static embedding lookup, the same word receives the same starting vector in different sentences. For example, the initial vector for “Apple” can be the same in “I love Apple phones” and “I love apple juice”. The vector alone does not identify which sense is intended in this occurrence.</p>
+<p>The speaker imagines this initial Apple vector as “50% technology and 50% fruit”. This is an analogy, not a literal description of embedding coordinates. Learned dimensions do not normally have neat labels such as “is fruit”, “can call” or “is smart”.</p>
+<p><strong>Correction to the transcript:</strong> RNNs and LSTMs can create contextual hidden states even when their input embeddings are static. Their important limitations include sequential computation and difficulty learning some long-distance relationships. It is incorrect to say that all RNN models cannot represent context.</p>
+<p>Also, “static across occurrences” does not necessarily mean “frozen throughout training”: an embedding table can be trained while still assigning one lookup vector to each token ID.</p>
+<h2 id="section-3">4. What self-attention produces — 4:05–6:05</h2>
+<p>For “I love Apple phones”, self-attention allows the representation at Apple to incorporate information from phones. For “I love apple juice”, it allows information from juice to contribute instead.</p>
+<table>
+<thead>
+<tr>
+<th>Input occurrence</th>
+<th>Relevant contextual clue</th>
+<th>Desired interpretation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Apple in “Apple phones”</td>
+<td>phones</td>
+<td>Technology company</td>
+</tr>
+<tr>
+<td>Apple in “apple juice”</td>
+<td>juice</td>
+<td>Fruit</td>
+</tr>
+<tr>
+<td>light in “lightweight”</td>
+<td>Weight-related context</td>
+<td>Low weight</td>
+</tr>
+<tr>
+<td>light in “light blue”</td>
+<td>blue</td>
+<td>Colour shade</td>
+</tr>
+<tr>
+<td>light in “light-headed”</td>
+<td>headed / surrounding context</td>
+<td>Faint or dizzy</td>
+</tr>
+</tbody></table>
+<p>The speaker illustrates this as movement in an embedding space: toward technology-related, fruit-related, colour-related or dizziness-related meanings.</p>
+<p>Treat this movement as intuition. Learned attention does not guarantee a literal movement toward a named meaning in a visible 2D map. Its output is a new activation; it does not overwrite the stored embedding table during inference.</p>
+<figure><h4>Picture 1 · Same word, different context</h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" role="img" aria-label="The same Apple input creates different contextual representations with phones or juice."><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52657a"/></marker></defs><rect x="35" y="100" width="230" height="90" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="150.0" y="141.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">Apple</text><text x="150.0" y="169.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">same starting vector</text><path d="M 270 145 L 405 75" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="410" y="35" width="190" height="80" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="505.0" y="71.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">phones</text><text x="505.0" y="99.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">context clue</text><path d="M 605 75 L 690 75" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="700" y="35" width="265" height="80" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="832.5" y="71.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">Technology company</text><text x="832.5" y="99.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">new Apple representation</text><path d="M 270 145 L 405 220" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="410" y="180" width="190" height="80" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="505.0" y="216.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">juice</text><text x="505.0" y="244.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">context clue</text><path d="M 605 220 L 690 220" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="700" y="180" width="265" height="80" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="832.5" y="216.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">Fruit</text><text x="832.5" y="244.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">new Apple representation</text></svg><figcaption>Context changes the output at Apple. The original embedding lookup table is not overwritten during inference.</figcaption></figure>
+
+<h2 id="section-4">5. First construction: make a weighted mixture — 6:06–10:14</h2>
+<p>The transcript shortens its running examples to three words: <strong>love, Apple, phones</strong> and <strong>love, apple, juice</strong>.</p>
+<p>Let E(word) mean the original embedding and word′ (“word dash” or “word prime”) mean its new representation.</p>
+<p>For the technology sentence:</p>
+<p><strong>Apple′ = 0.1 E(love) + 0.5 E(Apple) + 0.4 E(phones)</strong></p>
+<p>For the fruit sentence:</p>
+<p><strong>Apple′ = 0.1 E(love) + 0.5 E(apple) + 0.4 E(juice)</strong></p>
+<p>The percentages mean 10% of one vector, 50% of another and 40% of the last. Each vector is multiplied by its weight; the resulting vectors are added coordinate by coordinate. This is a <strong>weighted sum</strong>. Since these particular weights sum to one, it is also a weighted average.</p>
+<p>The transcript also gives:</p>
+<p><strong>love′ = 0.8 E(love) + 0.1 E(Apple) + 0.1 E(phones)</strong></p>
+<p><strong>juice′ = 0.1 E(love) + 0.4 E(apple) + 0.5 E(juice)</strong></p>
+<p>Adding apple information to juice can help its representation describe apple juice specifically.</p>
+<p><strong>These weights are invented teaching examples.</strong> They are not measured results, fixed rules, or the output of the numerical example later in the lesson.</p>
+<figure><h4>Picture 2 · Build a contextual vector by mixing information</h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 310" role="img" aria-label="Three weighted input vectors are added to create the Apple output."><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52657a"/></marker></defs><rect x="35" y="25" width="215" height="70" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="142.5" y="67.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">E(love)</text><path d="M 255 60 L 390 60" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><text x="322.5" y="50.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">× 0.1</text><rect x="400" y="25" width="160" height="70" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="480.0" y="67.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">Scaled vector</text><path d="M 565 60 L 690 150" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="35" y="115" width="215" height="70" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="142.5" y="157.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">E(Apple)</text><path d="M 255 150 L 390 150" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><text x="322.5" y="140.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">× 0.5</text><rect x="400" y="115" width="160" height="70" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="480.0" y="157.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">Scaled vector</text><path d="M 565 150 L 690 150" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="35" y="205" width="215" height="70" rx="15" fill="#c57a190d" stroke="#c57a19" stroke-width="2"/><text x="142.5" y="247.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">E(phones)</text><path d="M 255 240 L 390 240" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><text x="322.5" y="230.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">× 0.4</text><rect x="400" y="205" width="160" height="70" rx="15" fill="#c57a190d" stroke="#c57a19" stroke-width="2"/><text x="480.0" y="247.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">Scaled vector</text><path d="M 565 240 L 690 150" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="700" y="105" width="260" height="90" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="830.0" y="146.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">Add the vectors</text><text x="830.0" y="174.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">Apple′ = weighted mixture</text></svg><figcaption>Illustrative weights from the transcript: 10% love + 50% Apple + 40% phones. They sum to 100%. Each coordinate is mixed separately.</figcaption></figure>
+
+<h2 id="section-5">6. What the mixture weights mean — 10:15–13:30</h2>
+<p>For the Apple output, the speaker interprets 0.4 as the relationship of Apple to phones, 0.5 as its relationship to itself and 0.1 as its relationship to love.</p>
+<p>The operational question is: <strong>“When updating this word, how much information should I take from each available word?”</strong></p>
+<p>The weights can differ for every output position. Apple may need considerable information from phones, while phones may need a different amount from Apple.</p>
+<p>The speaker uses a 2D embedding diagram: related words tend to occur near one another, and Apple is illustrated between phones and juice. This introduces similarity scores.</p>
+<p><strong>Precision:</strong> Embedding geometry depends on training and the similarity measure. Far-apart words are not necessarily opposites; antonyms may be close because they occur in similar contexts. Attention compatibility also need not mean that words are synonyms.</p>
+<h2 id="section-6">7. Dot product: calculate one score from two vectors — 13:31–16:23</h2>
+<p><strong>Rule: multiply matching coordinates, then add the products.</strong></p>
+<p>For A = [a₁, a₂] and B = [b₁, b₂]:</p>
+<p><strong>A · B = a₁b₁ + a₂b₂</strong></p>
+<p>For more dimensions, continue the same multiply-and-add pattern across every coordinate. The result is one number, called a <strong>scalar</strong>.</p>
+<p>The coordinates implied by the transcript&#39;s arithmetic are:</p>
+<table>
+<thead>
+<tr>
+<th>Word</th>
+<th>Illustrative vector</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Apple</td>
+<td>[2, 2]</td>
+</tr>
+<tr>
+<td>phones</td>
+<td>[0, 4]</td>
+</tr>
+<tr>
+<td>love</td>
+<td>[−4, 3]</td>
+</tr>
+<tr>
+<td>juice</td>
+<td>[4, 0]</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Pair</th>
+<th>Calculation</th>
+<th align="right">Raw score</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Apple and phones</td>
+<td>2 × 0 + 2 × 4</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td>Apple and love</td>
+<td>2 × (−4) + 2 × 3</td>
+<td align="right">−2</td>
+</tr>
+<tr>
+<td>Apple and juice</td>
+<td>2 × 4 + 2 × 0</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td>Apple and itself</td>
+<td>2 × 2 + 2 × 2</td>
+<td align="right">8</td>
+</tr>
+</tbody></table>
+<p>The phone and juice calculations belong to their respective example sentences. They do not mean both must appear in the same sequence.</p>
+<h3>Why a transpose appears</h3>
+<p>Using row vectors, E(Apple) has shape 1 × 2. Transposing E(phones) changes its shape from 1 × 2 to 2 × 1.</p>
+<p><strong>(1 × 2) × (2 × 1) = (1 × 1)</strong></p>
+<p>Thus <strong>E(Apple) E(phones)ᵀ</strong> produces the single dot-product score.</p>
+<h3>Correction: dot product is not simply distance</h3>
+<p>The transcript suggests that a smaller distance always means a higher dot product. In general this is false: dot products depend on both direction and vector length.</p>
+<p>For example, A = [1, 0], B = [1, 0], C = [100, 0]. B is closer to A, but A · C = 100 is larger than A · B = 1.</p>
+<p>Use the dot product here as a <strong>compatibility score</strong>. It is not a distance, a percentage or a probability.</p>
+<figure><h4>Picture 3 · Dot product: match → multiply → add</h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" role="img" aria-label="Dot product: multiply matching coordinates and add the products."><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52657a"/></marker></defs><text x="120" y="50" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#087f8c">Apple</text><text x="120" y="150" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#7456b7">phones</text><rect x="275" y="10" width="130" height="65" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="340.0" y="49.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">2</text><rect x="275" y="110" width="130" height="65" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="340.0" y="149.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">0</text><path d="M 340 78 L 340 106" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><text x="340.0" y="82.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">×</text><path d="M 340 178 L 340 212" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="250" y="220" width="180" height="60" rx="15" fill="#c57a190d" stroke="#c57a19" stroke-width="2"/><text x="340.0" y="257.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">2 × 0 = 0</text><rect x="560" y="10" width="130" height="65" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="625.0" y="49.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">2</text><rect x="560" y="110" width="130" height="65" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="625.0" y="149.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">4</text><path d="M 625 78 L 625 106" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><text x="625.0" y="82.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">×</text><path d="M 625 178 L 625 212" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="535" y="220" width="180" height="60" rx="15" fill="#c57a190d" stroke="#c57a19" stroke-width="2"/><text x="625.0" y="257.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">2 × 4 = 8</text><text x="483" y="258" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="500" fill="#17324d">+</text><text x="855" y="258" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#087f8c">= 8</text></svg><figcaption>[2, 2] · [0, 4] = (2 × 0) + (2 × 4) = 8. The output is one scalar score, not another vector.</figcaption></figure>
+
+<h2 id="section-7">8. Softmax: convert raw scores into attention weights — 16:24–17:28</h2>
+<p>Raw dot products can be negative, large or small, and do not generally sum to one. To form a normalized mixture, the lesson applies <strong>softmax</strong>.</p>
+<p><strong>softmax(sᵢ) = exp(sᵢ) / Σⱼ exp(sⱼ)</strong></p>
+<p>Softmax makes the weights nonnegative and makes their sum one. For finite unmasked scores, the mathematical outputs are strictly positive. Larger scores receive larger weights.</p>
+<p>For Apple attending to [love, Apple, phones], the raw scores are:</p>
+<p><strong>[−2, 8, 8]</strong></p>
+<p>Their softmax is approximately:</p>
+<p><strong>[0.0000227, 0.4999887, 0.4999887]</strong></p>
+<p>The speaker rounds this to <strong>[0.0, 0.5, 0.5]</strong>. The first value is nearly zero, rather than exactly zero.</p>
+<p>These are attention weights over the available positions. A weight of 0.5 does not mean a 50% probability that Apple is the technology company.</p>
+<figure><h4>Picture 4 · Softmax turns scores into a share of attention</h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 325" role="img" aria-label="Softmax converts raw scores minus two, eight and eight into normalized attention weights."><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52657a"/></marker></defs><text x="175" y="35" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#52657a">RAW SCORES</text><text x="710" y="35" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#52657a">ATTENTION WEIGHTS</text><text x="55" y="100" text-anchor="start" font-family="Arial,sans-serif" font-size="20" font-weight="500" fill="#17324d">love</text><rect x="145" y="65" width="95" height="60" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="192.5" y="102.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">−2</text><rect x="570" y="75" width="285" height="38" rx="7" fill="#eef2f6"/><rect x="570" y="75" width="1" height="38" rx="7" fill="#7456b7"/><text x="885" y="101" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="500" fill="#7456b7">≈ 0%</text><text x="55" y="180" text-anchor="start" font-family="Arial,sans-serif" font-size="20" font-weight="500" fill="#17324d">Apple</text><rect x="145" y="145" width="95" height="60" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="192.5" y="182.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">8</text><rect x="570" y="155" width="285" height="38" rx="7" fill="#eef2f6"/><rect x="570" y="155" width="142.49677949999997" height="38" rx="7" fill="#087f8c"/><text x="885" y="181" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="500" fill="#087f8c">≈ 50%</text><text x="55" y="260" text-anchor="start" font-family="Arial,sans-serif" font-size="20" font-weight="500" fill="#17324d">phones</text><rect x="145" y="225" width="95" height="60" rx="15" fill="#c57a190d" stroke="#c57a19" stroke-width="2"/><text x="192.5" y="262.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">8</text><rect x="570" y="235" width="285" height="38" rx="7" fill="#eef2f6"/><rect x="570" y="235" width="142.49677949999997" height="38" rx="7" fill="#c57a19"/><text x="885" y="261" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="500" fill="#c57a19">≈ 50%</text><rect x="300" y="130" width="180" height="70" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="390.0" y="172.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">softmax</text><path d="M 245 165 L 294 165" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><path d="M 485 165 L 553 165" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><text x="710" y="310" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="500" fill="#52657a">All three weights add to 100%.</text></svg><figcaption>This is the transcript’s simplified, unscaled example. The love weight is very small, not exactly zero. Percentages describe the mixture, not the probability of a word’s meaning.</figcaption></figure>
+
+<h2 id="section-8">9. Use the weights to create the new vector — 17:29–19:21</h2>
+<p>In the initial construction:</p>
+<p><strong>Apple′ = α₁E(love) + α₂E(Apple) + α₃E(phones)</strong></p>
+<p>Here α₁, α₂ and α₃ are the softmax weights. Repeat this process for love and phones to get their new representations too.</p>
+<p><strong>Worked continuation, added for clarity:</strong> Using the rounded weights above,</p>
+<p>Apple′ ≈ 0[−4, 3] + 0.5[2, 2] + 0.5[0, 4] = <strong>[1, 3]</strong>.</p>
+<p>For [love, apple, juice], the corresponding rounded mixture is:</p>
+<p>Apple′ ≈ 0[−4, 3] + 0.5[2, 2] + 0.5[4, 0] = <strong>[3, 1]</strong>.</p>
+<p>The same starting Apple vector now produces different outputs because the other words differ. These calculations still use the simplified method, before learnable Q/K/V projections.</p>
+<figure><h4>Picture 5 · See the simplified vector mixture change</h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 330" role="img" aria-label="Rounded simplified attention mixtures give Apple output one three with phones and three one with juice."><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52657a"/></marker></defs><path d="M 120 260 L 650 260" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><path d="M 360 290 L 360 30" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><text x="660" y="285" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="500" fill="#52657a">coordinate 1</text><text x="370" y="22" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="500" fill="#52657a">coordinate 2</text><circle cx="456" cy="164" r="7" fill="#17324d"/><text x="531" y="182" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#17324d">Apple [2, 2]</text><circle cx="360" cy="68" r="7" fill="#087f8c"/><text x="300" y="56" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#087f8c">phones [0, 4]</text><circle cx="552" cy="260" r="7" fill="#c57a19"/><text x="612" y="248" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#c57a19">juice [4, 0]</text><circle cx="408" cy="116" r="7" fill="#087f8c"/><text x="358" y="109" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#087f8c">[1, 3]</text><circle cx="504" cy="212" r="7" fill="#c57a19"/><text x="569" y="205" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#c57a19">[3, 1]</text><path d="M 456 164 L 415 123" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><path d="M 456 164 L 497 205" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><text x="785" y="110" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">With phones:</text><text x="785" y="142" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="500" fill="#087f8c">Apple′ ≈ [1, 3]</text><text x="785" y="205" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">With juice:</text><text x="785" y="237" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="500" fill="#c57a19">Apple′ ≈ [3, 1]</text></svg><figcaption>Coordinates are the transcript’s toy example; output points use rounded [0, 0.5, 0.5] weights. The axes are numerical coordinates, not literal technology/fruit percentages. This picture precedes Q/K/V projections.</figcaption></figure>
+
+<h2 id="section-9">10. The gravity analogy — 19:22–20:09</h2>
+<p>The speaker compares attention to gravity: objects with a stronger relationship exert a stronger pull, so Apple&#39;s representation is pulled toward phones in the technology sentence.</p>
+<p>Useful lesson: <strong>a word receiving more attention contributes more strongly to the output mixture.</strong></p>
+<p>Limits: no physical force is involved, dot products are not gravitational distances, and learned attention can be directional. Unlike physical gravity, Apple attending strongly to phones does not require phones to attend equally strongly to Apple.</p>
+<h2 id="section-10">11. Problems with the first construction — 20:10–26:53</h2>
+<h3>Problem A: no learnable parameters in the attention rule</h3>
+<p>The initial method only compares and mixes the given embeddings. If those embeddings are held fixed, the attention rule has no parameters that training can adjust to learn more useful relationships. The embeddings could themselves be trainable, so “the whole model has nothing to learn” would be too broad.</p>
+<p><strong>Electronic-store chatbot example:</strong> A customer says, “I love Apple Watch.” Apple can be associated with fruit or technology; watch can mean observe/see or a device associated with clocks/time. The speaker uses this to motivate learning the product relationship rather than relying entirely on general embedding similarity.</p>
+<p>The example illustrates a possible limitation. It is not a guarantee that static embeddings cannot already place Apple and Watch near one another.</p>
+<h3>Problem B: the same vector plays three different roles</h3>
+<p>The initial method uses the same embedding as the requesting vector, the matching vector and the information being mixed.</p>
+<p>In particular:</p>
+<p><strong>E(Apple) · E(phones) = E(phones) · E(Apple)</strong></p>
+<p>The raw dot product is symmetric. But the information needed by Apple from phones need not equal the information needed by phones from Apple.</p>
+<p><strong>Important nuance:</strong> Symmetric raw scores do not guarantee symmetric final attention weights: each row&#39;s softmax can have a different denominator.</p>
+<h3>The speaker&#39;s additional concern: excessive self-matching</h3>
+<p>The transcript says a word&#39;s score with itself tends to dominate. This can be a concern, but it is not a mathematical certainty. The dot product with another vector can exceed the self-dot-product. Learned projections can make other matches useful; they do not guarantee that self-attention to the same position disappears.</p>
+<h3>Proposed solution</h3>
+<p>Introduce three separately learned matrix transformations. The speaker first describes these loosely as A, B and C; the actual solution uses <strong>matrices</strong>, not just three scalar multipliers. Scalar multipliers alone would not break the raw-score symmetry in the proposed way.</p>
+<h2 id="section-11">12. Query, Key and Value — 26:54–27:36</h2>
+<p>From an input vector x, create:</p>
+<p><strong>q = xW_Q</strong><br><strong>k = xW_K</strong><br><strong>v = xW_V</strong></p>
+<table>
+<thead>
+<tr>
+<th>Vector</th>
+<th>Plain-language role</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Query, q</td>
+<td>What information am I looking for?</td>
+<td>Is compared with available keys</td>
+</tr>
+<tr>
+<td>Key, k</td>
+<td>What can this position be matched on?</td>
+<td>Helps determine compatibility</td>
+</tr>
+<tr>
+<td>Value, v</td>
+<td>What information can I contribute?</td>
+<td>Is mixed into the output</td>
+</tr>
+</tbody></table>
+<p>These role descriptions are memory aids; Q, K and V are numerical vectors, not literal questions or labels.</p>
+<p><strong>W_Q, W_K and W_V are learned parameters.</strong> They are adjusted through backpropagation and an optimizer during training. At inference, the learned matrices are normally fixed while Q/K/V activations and attention weights are calculated for the current input.</p>
+<p>Within one head and layer, the same projection matrices are applied at every position. Different input vectors produce different Q/K/V vectors. Different heads or layers can have different matrices.</p>
+<p>For the transcript&#39;s example:</p>
+<p><strong>(1 × 512) × (512 × 64) = (1 × 64)</strong></p>
+<p>Each 512-number input produces a 64-number query, key and value. These are illustrative dimensions, not mandatory sizes for all transformers.</p>
+<figure><h4>Picture 6 · One input, three learned views</h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 355" role="img" aria-label="One input vector is transformed into query, key and value using three learned projection matrices."><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52657a"/></marker></defs><rect x="25" y="135" width="205" height="85" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="127.5" y="173.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">Input vector x</text><text x="127.5" y="201.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">one token</text><path d="M 235 177 L 350 65" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="360" y="25" width="170" height="80" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="445.0" y="61.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">W_Q</text><text x="445.0" y="89.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">learned matrix</text><path d="M 535 65 L 600 65" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="610" y="25" width="350" height="80" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="785.0" y="61.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">Query q</text><text x="785.0" y="89.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">What am I looking for?</text><path d="M 235 177 L 350 175" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="360" y="135" width="170" height="80" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="445.0" y="171.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">W_K</text><text x="445.0" y="199.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">learned matrix</text><path d="M 535 175 L 600 175" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="610" y="135" width="350" height="80" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="785.0" y="171.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">Key k</text><text x="785.0" y="199.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">What can be matched?</text><path d="M 235 177 L 350 285" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="360" y="245" width="170" height="80" rx="15" fill="#c57a190d" stroke="#c57a19" stroke-width="2"/><text x="445.0" y="281.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">W_V</text><text x="445.0" y="309.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">learned matrix</text><path d="M 535 285 L 600 285" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="610" y="245" width="350" height="80" rx="15" fill="#c57a190d" stroke="#c57a19" stroke-width="2"/><text x="785.0" y="281.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">Value v</text><text x="785.0" y="309.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">What can I contribute?</text></svg><figcaption>The matrices are learned during training. Q/K/V vectors are calculated from the current input. Q and K determine the weights; V supplies the content to mix.</figcaption></figure>
+
+<h2 id="section-12">13. Complete per-word operation — 27:37–31:21</h2>
+<p>To calculate the Apple output in [love, Apple, phones]:</p>
+<ol>
+<li>Use <strong>q_Apple</strong> as the query.</li>
+<li>Compare it with <strong>k_love</strong>, <strong>k_Apple</strong> and <strong>k_phones</strong>.</li>
+<li>Each comparison is a dot product and gives one raw score.</li>
+<li>In scaled dot-product attention, divide the scores by √dₖ.</li>
+<li>Apply softmax across these scores to get α₁, α₂, α₃.</li>
+<li>Calculate <strong>z_Apple = α₁v_love + α₂v_Apple + α₃v_phones</strong>.</li>
+</ol>
+<p><strong>Q and K decide the weights; V supplies the information.</strong></p>
+<p>For love&#39;s output, use q_love against the same available keys and mix the same available values using love&#39;s newly computed weights. For phones, use q_phones.</p>
+<p>The raw directional scores can now differ:</p>
+<p><strong>q_Apple · k_phones ≠ q_phones · k_Apple</strong>, in general.</p>
+<p>Separate learned Q and K projections make this possible; they do not require the scores to be unequal in every case.</p>
+<p>Three input positions produce three output vectors. Five positions produce five; 100 positions produce 100.</p>
+<p><strong>Why “self”?</strong> The queries, keys and values are all derived from the same input sequence. It does not mean that each word looks only at itself.</p>
+<figure><h4>Picture 7 · Follow the Apple query through attention</h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" role="img" aria-label="The Apple query is compared to three keys, softmax produces weights, and those weights multiply corresponding values."><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52657a"/></marker></defs><rect x="20" y="150" width="155" height="90" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="97.5" y="191.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">q_Apple</text><text x="97.5" y="219.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">fixed query</text><path d="M 180 195 L 250 65" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="260" y="25" width="170" height="80" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="345.0" y="61.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">k_love</text><text x="345.0" y="89.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">compare with q</text><path d="M 435 65 L 500 65" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="510" y="25" width="155" height="80" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="587.5" y="61.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">α_love</text><text x="587.5" y="89.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">scale + softmax</text><path d="M 670 65 L 730 65" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="740" y="25" width="225" height="80" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="852.5" y="61.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">α × v_love</text><text x="852.5" y="89.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">weighted information</text><path d="M 180 195 L 250 190" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="260" y="150" width="170" height="80" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="345.0" y="186.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">k_Apple</text><text x="345.0" y="214.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">compare with q</text><path d="M 435 190 L 500 190" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="510" y="150" width="155" height="80" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="587.5" y="186.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">α_Apple</text><text x="587.5" y="214.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">scale + softmax</text><path d="M 670 190 L 730 190" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="740" y="150" width="225" height="80" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="852.5" y="186.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">α × v_Apple</text><text x="852.5" y="214.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">weighted information</text><path d="M 180 195 L 250 315" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="260" y="275" width="170" height="80" rx="15" fill="#c57a190d" stroke="#c57a19" stroke-width="2"/><text x="345.0" y="311.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">k_phones</text><text x="345.0" y="339.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">compare with q</text><path d="M 435 315 L 500 315" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="510" y="275" width="155" height="80" rx="15" fill="#c57a190d" stroke="#c57a19" stroke-width="2"/><text x="587.5" y="311.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">α_phones</text><text x="587.5" y="339.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">scale + softmax</text><path d="M 670 315 L 730 315" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="740" y="275" width="225" height="80" rx="15" fill="#c57a190d" stroke="#c57a19" stroke-width="2"/><text x="852.5" y="311.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">α × v_phones</text><text x="852.5" y="339.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">weighted information</text><text x="500" y="390" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#087f8c">Add the three weighted values → z_Apple</text></svg><figcaption>Softmax normalizes the three scores together, across the available keys. Each weight stays paired with the value from the same position. Repeat with another query to update another token.</figcaption></figure>
+
+<h2 id="section-13">14. Benefits and their limits — 31:22–34:29</h2>
+<h3>Parallel computation</h3>
+<p>Within a layer, Apple&#39;s attention output does not need love&#39;s newly calculated output first. All outputs use the layer&#39;s existing inputs, so they can be calculated together using matrix operations.</p>
+<p>The speaker illustrates this with separate CPU threads and multiple GPUs. Actual implementations use optimized matrix computation on available hardware; they do not require one thread or GPU per word.</p>
+<p>An RNN&#39;s hidden state at a later position depends on the previous hidden state, which introduces a sequential chain.</p>
+<p><strong>Correction:</strong> The claim that one word and 1,000 words take the same time is false in general. The O(1) advantage concerns the number of sequential stages across positions within the layer, not total computation. Standard dense attention compares n positions with n positions, giving n² scores. Its attention computation is O(n²d), and materializing the score matrix takes O(n²) space. Longer sequences require more work; parallelism helps execute it efficiently.</p>
+<p>Autoregressive generation also normally produces new tokens sequentially. Parallel processing of known positions does not mean an entire response is generated simultaneously.</p>
+<h3>Long-range dependencies</h3>
+<p>A word can directly incorporate information from a distant available position without passing it through every intermediate position. This makes long-range relationships easier to learn than through a long recurrent chain.</p>
+<p>The transcript mentions Apple relating to distant terms such as voicemail and music player. These relationships can help interpretation, summarization and response generation.</p>
+<p><strong>Limit:</strong> Self-attention helps with long-distance context; it does not guarantee that every relevant dependency is learned or that every answer is correct. Context limits and attention masks still apply.</p>
+<figure><h4>Picture 8 · Why known positions can be processed in parallel</h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" role="img" aria-label="RNN hidden states form a sequential chain; self-attention outputs can be calculated from shared layer inputs in parallel."><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52657a"/></marker></defs><text x="45" y="35" text-anchor="start" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#17324d">RNN: each hidden state needs the previous state</text><rect x="80" y="65" width="220" height="70" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="190.0" y="107.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">h(love)</text><path d="M 305 100 L 380 100" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="390" y="65" width="220" height="70" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="500.0" y="107.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">h(Apple)</text><path d="M 615 100 L 690 100" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="700" y="65" width="220" height="70" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="810.0" y="107.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">h(phones)</text><text x="45" y="190" text-anchor="start" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#17324d">SELF-ATTENTION: use the same existing layer inputs</text><rect x="275" y="210" width="450" height="55" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="500.0" y="244.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">Input vectors for all three positions</text><path d="M 500 270 L 190 292" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="80" y="295" width="220" height="55" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="190.0" y="329.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">z(love)</text><path d="M 500 270 L 500 292" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="390" y="295" width="220" height="55" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="500.0" y="329.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">z(Apple)</text><path d="M 500 270 L 810 292" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="700" y="295" width="220" height="55" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="810.0" y="329.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">z(phones)</text></svg><figcaption>All attention outputs use the layer’s existing inputs; they do not wait for one another’s new outputs. Longer sequences still cost more computation. Generating new tokens is normally sequential.</figcaption></figure>
+
+<h2 id="section-14">15. Recap of the construction — 34:30–38:56</h2>
+<p>The speaker revisits the same chain of reasoning:</p>
+<ol>
+<li>Apple means different things with phones and juice.</li>
+<li>A static lookup vector alone does not identify this occurrence&#39;s meaning.</li>
+<li>Other words supply context.</li>
+<li>Create a weighted combination of word information.</li>
+<li>Calculate compatibility scores using dot products.</li>
+<li>Use softmax to turn scores into normalized weights.</li>
+<li>Introduce learnable W_Q, W_K and W_V to learn useful matching and content representations.</li>
+<li>Use the weights to combine values and obtain a contextual output.</li>
+</ol>
+<p>Repeated transcript examples are included in their corresponding sections above.</p>
+<h2 id="section-15">16. Matrix multiplication for the whole sentence — 38:57–42:15</h2>
+<p>Use one row per token. For [love, Apple, phones], stack three 512-dimensional inputs into <strong>X</strong>, with shape <strong>3 × 512</strong>.</p>
+<p>Form:</p>
+<p><strong>Q = XW_Q; K = XW_K; V = XW_V</strong></p>
+<p>Each projection matrix has shape 512 × 64, so Q, K and V each have shape 3 × 64.</p>
+<h3>Calculate all raw scores together</h3>
+<p><strong>S = QKᵀ</strong></p>
+<p><strong>(3 × 64) × (64 × 3) = (3 × 3)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Query position ↓ / key position →</th>
+<th>love</th>
+<th>Apple</th>
+<th>phones</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>love</td>
+<td>q_love · k_love</td>
+<td>q_love · k_Apple</td>
+<td>q_love · k_phones</td>
+</tr>
+<tr>
+<td>Apple</td>
+<td>q_Apple · k_love</td>
+<td>q_Apple · k_Apple</td>
+<td>q_Apple · k_phones</td>
+</tr>
+<tr>
+<td>phones</td>
+<td>q_phones · k_love</td>
+<td>q_phones · k_Apple</td>
+<td>q_phones · k_phones</td>
+</tr>
+</tbody></table>
+<p>Every row describes the scores used to update one position. Every column identifies the position being attended to.</p>
+<h3>Normalize the scores</h3>
+<p><strong>A = softmax(S / √dₖ)</strong></p>
+<p>A remains 3 × 3. With the row-per-token convention, apply softmax <strong>across each row</strong>, over the key positions. Each row sums to one.</p>
+<p><strong>Correction:</strong> The transcript says “vertical direction”. With the QKᵀ layout above, row-wise normalization is required. Its spoken matrix subscripts are also inconsistent; the query-row/key-column table gives an unambiguous convention.</p>
+<h3>Mix the values</h3>
+<p><strong>Z = AV</strong></p>
+<p><strong>(3 × 3) × (3 × 64) = (3 × 64)</strong></p>
+<p>Each output row is the new 64-dimensional representation for one position.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Shape in this example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Input X</td>
+<td>3 × 512</td>
+</tr>
+<tr>
+<td>W_Q, W_K, W_V</td>
+<td>Each 512 × 64</td>
+</tr>
+<tr>
+<td>Q, K, V</td>
+<td>Each 3 × 64</td>
+</tr>
+<tr>
+<td>Kᵀ</td>
+<td>64 × 3</td>
+</tr>
+<tr>
+<td>Raw scores QKᵀ</td>
+<td>3 × 3</td>
+</tr>
+<tr>
+<td>Attention weights A</td>
+<td>3 × 3</td>
+</tr>
+<tr>
+<td>Output Z = AV</td>
+<td>3 × 64</td>
+</tr>
+</tbody></table>
+<p>For n input positions, the same shapes become n × 512, n × 64, n × n and finally n × 64.</p>
+<figure><h4>Picture 9 · Track the matrix shapes</h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 455" role="img" aria-label="Matrix shapes: input three by 512 projects to Q K V three by 64. Q K transpose gives three by three attention scores, then weights times V gives three by 64 outputs."><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52657a"/></marker></defs><rect x="25" y="155" width="190" height="80" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="120.0" y="191.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">X: 3 × 512</text><text x="120.0" y="219.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">3 input positions</text><path d="M 220 195 L 300 60" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="310" y="20" width="180" height="80" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="400.0" y="56.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">Q: 3 × 64</text><text x="400.0" y="84.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">X × W_Q</text><path d="M 220 195 L 300 195" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="310" y="155" width="180" height="80" rx="15" fill="#7456b70d" stroke="#7456b7" stroke-width="2"/><text x="400.0" y="191.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#7456b7">K: 3 × 64</text><text x="400.0" y="219.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">X × W_K</text><path d="M 220 195 L 300 330" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="310" y="290" width="180" height="80" rx="15" fill="#c57a190d" stroke="#c57a19" stroke-width="2"/><text x="400.0" y="326.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#c57a19">V: 3 × 64</text><text x="400.0" y="354.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">X × W_V</text><path d="M 495 60 L 590 125" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><path d="M 495 195 L 590 160" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="600" y="105" width="355" height="90" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="777.5" y="146.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">QKᵀ: 3 × 3</text><text x="777.5" y="174.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">one score per query–key pair</text><path d="M 777 200 L 777 230" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="600" y="240" width="355" height="80" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="777.5" y="276.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">A: 3 × 3</text><text x="777.5" y="304.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">scale + row-wise softmax</text><path d="M 777 325 L 777 355" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><path d="M 495 330 L 590 395" stroke="#52657a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><rect x="600" y="365" width="355" height="80" rx="15" fill="#087f8c0d" stroke="#087f8c" stroke-width="2"/><text x="777.5" y="401.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#087f8c">Z = AV: 3 × 64</text><text x="777.5" y="429.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="500" fill="#52657a">one output vector per position</text></svg><figcaption>For one head: (3 × 64)(64 × 3) = 3 × 3 scores; then (3 × 3)(3 × 64) = 3 × 64 outputs. Each row of A sums to 1.</figcaption></figure>
+
+<h2 id="section-16">17. The final equation</h2>
+<p><strong>Attention(Q, K, V) = softmax(QKᵀ / √dₖ)V</strong></p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>QKᵀ</td>
+<td>Calculate query–key compatibility scores</td>
+</tr>
+<tr>
+<td>√dₖ</td>
+<td>Scale using the query/key vector dimension</td>
+</tr>
+<tr>
+<td>softmax</td>
+<td>Normalize over available key positions</td>
+</tr>
+<tr>
+<td>Multiply by V</td>
+<td>Form weighted combinations of value vectors</td>
+</tr>
+</tbody></table>
+<p>The transcript derives the unscaled expression <strong>softmax(QKᵀ)V</strong> and acknowledges the missing division by √dₖ at the end. The supplied text stops before explaining it.</p>
+<h3>Added clarification: why divide by √dₖ?</h3>
+<p>Large query/key dimensions can produce dot products of large magnitude. These can make softmax very concentrated and its gradients small. Scaling helps control that effect. If dₖ = 64, divide by √64 = <strong>8</strong> before softmax.</p>
+<h3>Added clarification: where the 512 and 64 come from</h3>
+<p>The original Transformer base model used a model width of 512 with eight attention heads, each using 64-dimensional queries, keys and values. The transcript&#39;s 3 × 64 output illustrates <strong>one head</strong>. In the original multi-head block, head outputs are concatenated and projected back to the model width. A transformer also contains other components; a single attention operation is not the entire network.</p>
+<h3>Added clarification: available context</h3>
+<p>The transcript&#39;s examples allow every word to attend to all three positions. In causal attention used for next-token prediction, future positions are masked. Positional information is also needed to represent order; this transcript does not teach positional encoding, masking or multi-head attention in detail.</p>
+<h2 id="section-17">18. Assessment answers to remember</h2>
+<p><strong>What is self-attention?</strong><br>“Self-attention lets each token combine information from relevant tokens in the same sequence to build a contextual representation.”</p>
+<p><strong>Why do we need it?</strong><br>“The same word can have different meanings in different sentences. Attention helps the model use context, such as phones or juice, to represent Apple appropriately.”</p>
+<p><strong>How do you calculate a dot product?</strong><br>“Multiply matching elements of two vectors and add the results. For [2, 2] and [0, 4], it is 2×0 + 2×4 = 8.”</p>
+<p><strong>What are Query, Key and Value?</strong><br>“Queries and keys determine attention weights. Values provide the information combined using those weights. All three are generated using learned projections.”</p>
+<p><strong>Why softmax?</strong><br>“It converts raw compatibility scores into nonnegative attention weights that sum to one for each query.”</p>
+<p><strong>What does the model learn?</strong><br>“It learns projection matrices such as W_Q, W_K and W_V. Attention weights are then calculated from the current input.”</p>
+<p><strong>Why is self-attention useful compared with an RNN?</strong><br>“It supports parallel computation across known positions and direct connections between distant positions. Standard dense attention becomes expensive for long sequences because it compares every position with every other position.”</p>
+<p><strong>One-line memory aid:</strong> Project to Q/K/V → compare Q with K → scale → softmax → mix V.</p>
+<h2 id="section-18">19. Transcript coverage checklist</h2>
+<table>
+<thead>
+<tr>
+<th>Transcript section</th>
+<th>Covered in notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Introduction and from-scratch teaching approach</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Context problem; light and Apple examples</td>
+<td>2–4</td>
+</tr>
+<tr>
+<td>Weighted sums for Apple, love and juice</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Meaning of relationship weights and embedding-space intuition</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Dot products, numerical coordinates, transposes and scalar outputs</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Softmax, negative scores, normalization and rounding</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Computing every word&#39;s representation</td>
+<td>9, 13</td>
+</tr>
+<tr>
+<td>Gravity analogy</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Missing learnable parameters; electronics chatbot and Apple Watch</td>
+<td>11</td>
+</tr>
+<tr>
+<td>Symmetric scores, three vector roles and self-matching</td>
+<td>11–12</td>
+</tr>
+<tr>
+<td>Q/K/V projection matrices and 512-to-64 dimensions</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Complete per-word attention procedure</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Parallelism; CPU/GPU illustration; complexity correction</td>
+<td>14</td>
+</tr>
+<tr>
+<td>Long-range dependencies; voicemail/music-player examples</td>
+<td>14</td>
+</tr>
+<tr>
+<td>Speaker&#39;s recap</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Sentence matrices, score matrix, softmax axis and output shapes</td>
+<td>16</td>
+</tr>
+<tr>
+<td>Final equation and unfinished scaling reference</td>
+<td>17</td>
+</tr>
+</tbody></table>
+<h2 id="section-19">Source used to check technical corrections</h2>
+<p>Vaswani et al., <em>Attention Is All You Need</em>: <a href="https://arxiv.org/html/1706.03762v7">https://arxiv.org/html/1706.03762v7</a> — sections 3.2.1–3.2.3 and Table 1. Used to verify the scaled attention equation, projection dimensions, masking and the distinction between sequential depth and total computation. The transcript remains the source for the lesson&#39;s examples and teaching sequence.</p>
+</main><footer>Memory aid: project to Q/K/V → compare → scale → softmax → mix values.</footer></body></html>

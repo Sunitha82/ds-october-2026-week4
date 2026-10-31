@@ -1,0 +1,547 @@
+[
+  {
+    "recipe_id": "TEST_01",
+    "split": "test",
+    "recipe_family": "walnut stuffed peppers",
+    "input": {
+      "recipe_text": "Walnut stuffed peppers\nIngredients: 2 peppers; 100 g cooked rice; 30 g walnuts; 1 tbsp tomato puree; 1 tsp olive oil; salt.\nPreparation time: 15 minutes.\nDifficulty: medium.\nMethod: Halve peppers, mix rice, chopped walnuts, tomato puree, oil and salt, fill peppers and bake until tender.",
+      "target_allergen": "nuts"
+    },
+    "reference": {
+      "title": "Walnut stuffed peppers",
+      "ingredients": [
+        "peppers",
+        "cooked rice",
+        "walnuts",
+        "tomato puree",
+        "olive oil",
+        "salt"
+      ],
+      "allergens": [
+        "nuts"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 15,
+      "difficulty": "medium",
+      "main_allergen": "nuts",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "walnuts",
+            "replacement": "pumpkin seeds",
+            "workability_reason": "Maintains a crunchy filling component."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_02",
+    "split": "test",
+    "recipe_family": "spinach chickpea omelette with egg",
+    "input": {
+      "recipe_text": "Spinach chickpea omelette with egg\nIngredients: 2 eggs; 60 g cooked chickpeas; 30 g spinach; 1 tsp olive oil; salt.\nPreparation time: 8 minutes.\nDifficulty: easy.\nMethod: Whisk eggs with salt, fold in spinach and chickpeas, then cook in an oiled pan until set throughout.",
+      "target_allergen": "eggs"
+    },
+    "reference": {
+      "title": "Spinach chickpea omelette with egg",
+      "ingredients": [
+        "eggs",
+        "cooked chickpeas",
+        "spinach",
+        "olive oil",
+        "salt"
+      ],
+      "allergens": [
+        "eggs"
+      ],
+      "possible_allergens": [],
+      "diet": "vegetarian",
+      "prep_time_minutes": 8,
+      "difficulty": "easy",
+      "main_allergen": "eggs",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "eggs",
+            "replacement": "chickpea flour mixed with water to form a thick pourable batter",
+            "workability_reason": "Forms a savoury pancake; cook both sides thoroughly rather than folding an egg omelette."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_03",
+    "split": "test",
+    "recipe_family": "celeriac apple mash",
+    "input": {
+      "recipe_text": "Celeriac apple mash\nIngredients: 200 g celeriac; 1 apple; 1 tbsp olive oil; water for boiling; salt.\nPreparation time: 15 minutes.\nDifficulty: easy.\nMethod: Peel and chop celeriac and apple. Boil until soft, drain and mash with oil and salt.",
+      "target_allergen": "celery"
+    },
+    "reference": {
+      "title": "Celeriac apple mash",
+      "ingredients": [
+        "celeriac",
+        "apple",
+        "olive oil",
+        "water",
+        "salt"
+      ],
+      "allergens": [
+        "celery"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 15,
+      "difficulty": "easy",
+      "main_allergen": "celery",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "celeriac",
+            "replacement": "potato",
+            "workability_reason": "Boils and mashes well, with a milder flavour."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": "Celeriac is part of the celery allergen category even without a celery stalk in the recipe."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_04",
+    "split": "test",
+    "recipe_family": "mustard potato traybake",
+    "input": {
+      "recipe_text": "Mustard potato traybake\nIngredients: 300 g baby potatoes; 1 tbsp mustard powder (ground mustard seeds); 1 tbsp olive oil; 1 tsp paprika; salt.\nPreparation time: 10 minutes.\nDifficulty: easy.\nMethod: Halve potatoes, coat with oil and seasoning, then roast until tender and browned.",
+      "target_allergen": "mustard"
+    },
+    "reference": {
+      "title": "Mustard potato traybake",
+      "ingredients": [
+        "baby potatoes",
+        "mustard powder",
+        "olive oil",
+        "paprika",
+        "salt"
+      ],
+      "allergens": [
+        "mustard"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 10,
+      "difficulty": "easy",
+      "main_allergen": "mustard",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "mustard powder",
+            "replacement": "ground cumin",
+            "workability_reason": "Provides a different savoury spice without changing the roasting method."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_05",
+    "split": "test",
+    "recipe_family": "edamame avocado bowl",
+    "input": {
+      "recipe_text": "Edamame avocado bowl\nIngredients: 100 g cooked edamame (soya beans); 100 g cooked quinoa; 1 avocado; 1 tbsp lime juice; salt.\nPreparation time: 8 minutes.\nDifficulty: easy.\nMethod: Slice avocado and assemble with quinoa and edamame; dress with lime and salt.",
+      "target_allergen": "soya"
+    },
+    "reference": {
+      "title": "Edamame avocado bowl",
+      "ingredients": [
+        "edamame",
+        "cooked quinoa",
+        "avocado",
+        "lime juice",
+        "salt"
+      ],
+      "allergens": [
+        "soya"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 8,
+      "difficulty": "easy",
+      "main_allergen": "soya",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "edamame",
+            "replacement": "cooked green peas",
+            "workability_reason": "Preserves the small green bean-like component; nutritional values will differ."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_06",
+    "split": "test",
+    "recipe_family": "ricotta lemon baked filling",
+    "input": {
+      "recipe_text": "Ricotta lemon baked filling\nIngredients: 150 g ricotta (milk, citric acid, salt; no animal rennet); 1 tbsp lemon juice; 1 tsp sugar.\nPreparation time: 5 minutes.\nDifficulty: easy.\nMethod: Mix ingredients, spoon into a small ovenproof dish and bake at 180 C until hot and lightly set.",
+      "target_allergen": "milk"
+    },
+    "reference": {
+      "title": "Ricotta lemon baked filling",
+      "ingredients": [
+        "ricotta",
+        "lemon juice",
+        "sugar"
+      ],
+      "allergens": [
+        "milk"
+      ],
+      "possible_allergens": [],
+      "diet": "vegetarian",
+      "prep_time_minutes": 5,
+      "difficulty": "easy",
+      "main_allergen": "milk",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "ricotta",
+            "replacement": "firm tofu blended with a little lemon juice",
+            "workability_reason": "Provides a thick protein-based filling; texture and flavour differ."
+          }
+        ],
+        "introduced_allergens": [
+          "soya"
+        ],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_07",
+    "split": "test",
+    "recipe_family": "peanut butter banana bites",
+    "input": {
+      "recipe_text": "Peanut butter banana bites\nIngredients: 1 banana; 2 tbsp peanut butter (100% peanuts); 1 tsp cocoa powder (100% cocoa).\nPreparation time: 5 minutes.\nDifficulty: easy.\nMethod: Slice banana, spread with peanut butter and dust with cocoa.",
+      "target_allergen": "peanuts"
+    },
+    "reference": {
+      "title": "Peanut butter banana bites",
+      "ingredients": [
+        "banana",
+        "peanut butter",
+        "cocoa powder"
+      ],
+      "allergens": [
+        "peanuts"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 5,
+      "difficulty": "easy",
+      "main_allergen": "peanuts",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "peanut butter",
+            "replacement": "sunflower seed butter made only from sunflower seeds",
+            "workability_reason": "Retains a spreadable topping."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_08",
+    "split": "test",
+    "recipe_family": "sesame aubergine glaze",
+    "input": {
+      "recipe_text": "Sesame aubergine glaze\nIngredients: 1 aubergine; 1 tbsp sesame oil; 1 tsp sesame seeds; 1 tbsp lemon juice; 1 tsp sugar; salt.\nPreparation time: 10 minutes.\nDifficulty: medium.\nMethod: Slice aubergine, coat with sesame oil, lemon, sugar and salt, roast until tender, then top with sesame seeds.",
+      "target_allergen": "sesame"
+    },
+    "reference": {
+      "title": "Sesame aubergine glaze",
+      "ingredients": [
+        "aubergine",
+        "sesame oil",
+        "sesame seeds",
+        "lemon juice",
+        "sugar",
+        "salt"
+      ],
+      "allergens": [
+        "sesame"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 10,
+      "difficulty": "medium",
+      "main_allergen": "sesame",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "sesame oil",
+            "replacement": "olive oil",
+            "workability_reason": "Provides roasting fat; toasted sesame flavour is lost."
+          },
+          {
+            "ingredient": "sesame seeds",
+            "replacement": "pumpkin seeds",
+            "workability_reason": "Provides a different crunchy topping."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": "Both sesame oil and sesame seeds must be addressed."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_09",
+    "split": "test",
+    "recipe_family": "mushroom butter milk polenta",
+    "input": {
+      "recipe_text": "Mushroom butter milk polenta\nIngredients: 60 g polenta (100% maize); 200 ml whole milk; 200 ml water; 10 g butter; 100 g mushrooms; salt.\nPreparation time: 10 minutes.\nDifficulty: medium.\nMethod: Cook polenta in milk and water, stirring until thick. Fry sliced mushrooms in butter and serve on top.",
+      "target_allergen": "milk"
+    },
+    "reference": {
+      "title": "Mushroom butter milk polenta",
+      "ingredients": [
+        "polenta",
+        "whole milk",
+        "water",
+        "butter",
+        "mushrooms",
+        "salt"
+      ],
+      "allergens": [
+        "milk"
+      ],
+      "possible_allergens": [],
+      "diet": "vegetarian",
+      "prep_time_minutes": 10,
+      "difficulty": "medium",
+      "main_allergen": "milk",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "whole milk",
+            "replacement": "water",
+            "workability_reason": "Polenta will still thicken, with reduced creaminess."
+          },
+          {
+            "ingredient": "butter",
+            "replacement": "olive oil",
+            "workability_reason": "Provides fat for frying mushrooms."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": "Polenta is maize, not a gluten-containing cereal. Both milk sources must be replaced."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_10",
+    "split": "test",
+    "recipe_family": "wheat couscous with feta",
+    "input": {
+      "recipe_text": "Wheat couscous with feta\nIngredients: 100 g wheat couscous; 50 g feta (milk, salt, vegetarian microbial rennet); 1 tomato; 150 ml boiling water; 1 tbsp olive oil.\nPreparation time: 10 minutes.\nDifficulty: easy.\nMethod: Cover couscous with boiling water, stand for 5 minutes, fluff, and add chopped tomato, feta and oil.",
+      "target_allergen": "cereals_containing_gluten"
+    },
+    "reference": {
+      "title": "Wheat couscous with feta",
+      "ingredients": [
+        "wheat couscous",
+        "feta",
+        "tomato",
+        "water",
+        "olive oil"
+      ],
+      "allergens": [
+        "cereals_containing_gluten",
+        "milk"
+      ],
+      "possible_allergens": [],
+      "diet": "vegetarian",
+      "prep_time_minutes": 10,
+      "difficulty": "easy",
+      "main_allergen": "cereals_containing_gluten",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "wheat couscous",
+            "replacement": "quinoa cooked separately according to packet instructions",
+            "workability_reason": "Creates a grain-style salad; quinoa requires cooking rather than merely soaking."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [
+          "milk"
+        ],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": "Feta is explicitly vegetarian. Milk remains after replacing couscous."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_11",
+    "split": "test",
+    "recipe_family": "roasted carrot cumin wedges",
+    "input": {
+      "recipe_text": "Roasted carrot cumin wedges\nIngredients: 3 carrots; 1 tbsp olive oil; 1 tsp cumin; salt.\nMethod: Cut carrots into wedges, coat with oil, cumin and salt and roast until tender.",
+      "target_allergen": null
+    },
+    "reference": {
+      "title": "Roasted carrot cumin wedges",
+      "ingredients": [
+        "carrots",
+        "olive oil",
+        "cumin",
+        "salt"
+      ],
+      "allergens": [],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": null,
+      "difficulty": null,
+      "main_allergen": null,
+      "substitution_required": false,
+      "substitution_reference": null,
+      "annotation_notes": "Time and difficulty are absent; return unknown rather than fabricate them."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_12",
+    "split": "test",
+    "recipe_family": "cheese tomato stuffed courgette",
+    "input": {
+      "recipe_text": "Cheese tomato stuffed courgette\nIngredients: 1 courgette; 50 g hard cheese, rennet source unspecified; 1 tomato; 1 tsp olive oil.\nPreparation time: 12 minutes.\nDifficulty: medium.\nMethod: Halve courgette, hollow slightly, fill with tomato and grated cheese, drizzle with oil and bake until tender.",
+      "target_allergen": "milk"
+    },
+    "reference": {
+      "title": "Cheese tomato stuffed courgette",
+      "ingredients": [
+        "courgette",
+        "hard cheese",
+        "tomato",
+        "olive oil"
+      ],
+      "allergens": [
+        "milk"
+      ],
+      "possible_allergens": [],
+      "diet": "uncertain",
+      "prep_time_minutes": 12,
+      "difficulty": "medium",
+      "main_allergen": "milk",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "hard cheese",
+            "replacement": "nutritional yeast with no added milk ingredients",
+            "workability_reason": "Provides a savoury topping but will not melt like cheese."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": "Milk is definite. Vegetarian status is uncertain because the rennet source is unknown. Flag suitability rather than silently assuming vegetarian."
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  },
+  {
+    "recipe_id": "TEST_13",
+    "split": "test",
+    "recipe_family": "lupin flour dumplings",
+    "input": {
+      "recipe_text": "Lupin flour dumplings\nIngredients: 40 g lupin flour; 60 g rice flour; 90 ml water; 1 pinch salt; 1 tsp olive oil.\nPreparation time: 20 minutes.\nDifficulty: medium.\nMethod: Mix flours, water, salt and oil into a dough, shape small dumplings and steam until cooked through.",
+      "target_allergen": "lupin"
+    },
+    "reference": {
+      "title": "Lupin flour dumplings",
+      "ingredients": [
+        "lupin flour",
+        "rice flour",
+        "water",
+        "salt",
+        "olive oil"
+      ],
+      "allergens": [
+        "lupin"
+      ],
+      "possible_allergens": [],
+      "diet": "vegan",
+      "prep_time_minutes": 20,
+      "difficulty": "medium",
+      "main_allergen": "lupin",
+      "substitution_required": true,
+      "substitution_reference": {
+        "required_replacements": [
+          {
+            "ingredient": "lupin flour",
+            "replacement": "chickpea flour",
+            "workability_reason": "Keeps a pulse-flour component; adjust water and test a small dumpling because binding may differ."
+          }
+        ],
+        "introduced_allergens": [],
+        "remaining_original_allergens": [],
+        "evaluation_note": "One acceptable example, not the only valid answer. Evaluate all affected ingredients and dish function."
+      },
+      "annotation_notes": ""
+    },
+    "provenance": "AI-authored synthetic recipe and reference labels; not independently expert-reviewed"
+  }
+]
